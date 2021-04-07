@@ -1,0 +1,24 @@
+<div class="col">
+  <div class="row m-3">
+    <div class="col-md-8 p-0">
+      <h1>Liste des articles</h1>
+    </div>
+    <div class="col-md-4 text-right">
+      <app-boutton-action
+        (clickEvent)="nouvelArticle()"
+      ></app-boutton-action>
+    </div>
+  </div>
+  <div class="col m-3">
+    <app-detail-article></app-detail-article>
+    <app-detail-article></app-detail-article>
+    <app-detail-article></app-detail-article>
+    <app-detail-article></app-detail-article>
+  </div>
+  <div class="row mb-3">
+    <div class=" col-md-12 text-center">
+      <app-pagination></app-pagination>
+    </div>
+  </div>
+
+</div>

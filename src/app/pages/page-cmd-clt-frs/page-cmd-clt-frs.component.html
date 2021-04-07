@@ -1,0 +1,99 @@
+<div class="col">
+  <div class="row m-3">
+    <div class="col-md-8 p-0">
+      <h1>Commande {{origin}}s</h1>
+    </div>
+    <div class="col-md-4 text-right">
+      <app-boutton-action
+        [isImporterVisible]="false"
+
+      (clickEvent)="nouvelleCommande()"
+      ></app-boutton-action>
+    </div>
+  </div>
+  <div class="col m-3">
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-body" id="headingOne">
+          <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <app-detail-cmd-clt-frs></app-detail-cmd-clt-frs>
+          </button>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="max-height: 300px;
+        overflow-y: scroll">
+          <div class="card-body">
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+          </div>
+        </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-md-6 text-left">
+                <h5>12 articles commandes</h5>
+              </div>
+              <div class="col-md-6 text-right">
+                <h5>Total commande: 123,69</h5>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-body" id="headingOne1">
+          <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="true"
+                  aria-controls="collapseOne">
+            <app-detail-cmd-clt-frs></app-detail-cmd-clt-frs>
+          </button>
+        </div>
+        <div id="collapseOne1" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="max-height: 300px;
+        overflow-y: scroll">
+          <div class="card-body">
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd></app-detail-cmd>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <h5>12 articles commandes</h5>
+            </div>
+            <div class="col-md-6 text-right">
+              <h5>Total commande: 123,69</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class=" col-md-12 text-center">
+      <app-pagination></app-pagination>
+    </div>
+  </div>
+
+</div>

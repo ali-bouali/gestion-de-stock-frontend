@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #eff2f5 !important;
+}
+
+.backgroung-grey {
+  background-color: #eff2f5 !important;
+}
+.border-none {
+  border: none !important;
+}
+
+.min-height-80 {
+  min-height: 80px;
+}
+
+.custom-border-right {
+  border-right: 2px solid #9ca1a6 !important; ;
+}
+.custom-border {
+  border: solid #9ca1a6;
+  border-radius: 5px;
+}
+.blue-color {
+  color: #037bfe;
+}
