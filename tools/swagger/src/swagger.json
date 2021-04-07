@@ -1,0 +1,2462 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Swagger Api documentation for Gestion de stock application",
+    "version" : "0.0.1-SNAPSHOT",
+    "title" : "Swagger Api Documentation for Gestion de stock application",
+    "contact" : {
+      "name" : "Ali Bouali",
+      "url" : "https://www.udemy.com/user/bouali-ali/",
+      "email" : "bouali.social@gmail.com"
+    }
+  },
+  "basePath" : "http://localhost:8081",
+  "tags" : [ {
+    "name" : "articles"
+  }, {
+    "name" : "authentication"
+  }, {
+    "name" : "categories"
+  }, {
+    "name" : "clients"
+  }, {
+    "name" : "commandefournisseur"
+  }, {
+    "name" : "commandesclients"
+  }, {
+    "name" : "entreprises"
+  }, {
+    "name" : "fournisseur"
+  }, {
+    "name" : "mvtstk"
+  }, {
+    "name" : "photos"
+  }, {
+    "name" : "utilisateurs"
+  }, {
+    "name" : "ventes"
+  } ],
+  "paths" : {
+    "/gestiondestock/v1/articles/all" : {
+      "get" : {
+        "tags" : [ "articles" ],
+        "summary" : "Renvoi la liste des articles",
+        "description" : "Cette methode permet de chercher et renvoyer la liste des articles qui existent dans la BDD",
+        "operationId" : "findAll",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "La liste des article / Une liste vide",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ArticleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/create" : {
+      "post" : {
+        "tags" : [ "articles" ],
+        "summary" : "Enregistrer un article",
+        "description" : "Cette methode permet d'enregistrer ou modifier un article",
+        "operationId" : "save",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ArticleDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "L'objet article cree / modifie",
+            "schema" : {
+              "$ref" : "#/definitions/ArticleDto"
+            }
+          },
+          "400" : {
+            "description" : "L'objet article n'est pas valide"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/delete/{idArticle}" : {
+      "delete" : {
+        "tags" : [ "articles" ],
+        "summary" : "Supprimer un article",
+        "description" : "Cette methode permet de supprimer un article par ID",
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "L'article a ete supprime"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/filter/category/{idCategory}" : {
+      "get" : {
+        "tags" : [ "articles" ],
+        "operationId" : "findAllArticleByIdCategory",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idCategory",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ArticleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/filter/{codeArticle}" : {
+      "get" : {
+        "tags" : [ "articles" ],
+        "summary" : "Rechercher un article par CODE",
+        "description" : "Cette methode permet de chercher un article par son CODE",
+        "operationId" : "findByCodeArticle",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "codeArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "L'article a ete trouve dans la BDD",
+            "schema" : {
+              "$ref" : "#/definitions/ArticleDto"
+            }
+          },
+          "404" : {
+            "description" : "Aucun article n'existe dans la BDD avec le CODE fourni"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/historique/commandeclient/{idArticle}" : {
+      "get" : {
+        "tags" : [ "articles" ],
+        "operationId" : "findHistoriaueCommandeClient",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/LigneCommandeClientDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/historique/commandefournisseur/{idArticle}" : {
+      "get" : {
+        "tags" : [ "articles" ],
+        "operationId" : "findHistoriqueCommandeFournisseur",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/LigneCommandeFournisseurDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/historique/vente/{idArticle}" : {
+      "get" : {
+        "tags" : [ "articles" ],
+        "operationId" : "findHistoriqueVentes",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/LigneVenteDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/articles/{idArticle}" : {
+      "get" : {
+        "tags" : [ "articles" ],
+        "summary" : "Rechercher un article par ID",
+        "description" : "Cette methode permet de chercher un article par son ID",
+        "operationId" : "findById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "L'article a ete trouve dans la BDD",
+            "schema" : {
+              "$ref" : "#/definitions/ArticleDto"
+            }
+          },
+          "404" : {
+            "description" : "Aucun article n'existe dans la BDD avec l'ID fourni"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/auth/authenticate" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "operationId" : "authenticate",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AuthenticationRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AuthenticationResponse"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/categories/all" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Renvoi la liste des categories",
+        "description" : "Cette methode permet de chercher et renvoyer la liste des categories qui existent dans la BDD",
+        "operationId" : "findAll",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "La liste des article / Une liste vide",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/CategoryDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/categories/create" : {
+      "post" : {
+        "tags" : [ "categories" ],
+        "summary" : "Enregistrer une categorie",
+        "description" : "Cette methode permet d'enregistrer ou modifier une categorie",
+        "operationId" : "save",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CategoryDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "L'objet category cree / modifie",
+            "schema" : {
+              "$ref" : "#/definitions/CategoryDto"
+            }
+          },
+          "400" : {
+            "description" : "L'objet category n'est pas valide"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/categories/delete/{idCategory}" : {
+      "delete" : {
+        "tags" : [ "categories" ],
+        "summary" : "Supprimer un article",
+        "description" : "Cette methode permet de supprimer une categorie par ID",
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idCategory",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "La categorie a ete supprime"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/categories/filter/{codeCategory}" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Rechercher une categorie par CODE",
+        "description" : "Cette methode permet de chercher une categorie par son CODE",
+        "operationId" : "findByCode",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "codeCategory",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "L'article a ete trouve dans la BDD",
+            "schema" : {
+              "$ref" : "#/definitions/CategoryDto"
+            }
+          },
+          "404" : {
+            "description" : "Aucun article n'existe dans la BDD avec le CODE fourni"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/categories/{idCategory}" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Rechercher une categorie par ID",
+        "description" : "Cette methode permet de chercher une categorie par son ID",
+        "operationId" : "findById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idCategory",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "La categorie a ete trouve dans la BDD",
+            "schema" : {
+              "$ref" : "#/definitions/CategoryDto"
+            }
+          },
+          "404" : {
+            "description" : "Aucune categorie n'existe dans la BDD avec l'ID fourni"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/clients/all" : {
+      "get" : {
+        "tags" : [ "clients" ],
+        "operationId" : "findAll",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ClientDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/clients/create" : {
+      "post" : {
+        "tags" : [ "clients" ],
+        "operationId" : "save",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ClientDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/clients/delete/{idClient}" : {
+      "delete" : {
+        "tags" : [ "clients" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idClient",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/clients/{idClient}" : {
+      "get" : {
+        "tags" : [ "clients" ],
+        "operationId" : "findById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idClient",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/all" : {
+      "get" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/CommandeClientDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/create" : {
+      "post" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "save",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CommandeClientDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/delete/article/{idCommande}/{idLigneCommande}" : {
+      "delete" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "deleteArticle",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idLigneCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/delete/{idCommandeClient}" : {
+      "delete" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idCommandeClient",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/filter/{codeCommandeClient}" : {
+      "get" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "findByCode",
+        "parameters" : [ {
+          "name" : "codeCommandeClient",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/lignesCommande/{idCommande}" : {
+      "get" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "findAllLignesCommandesClientByCommandeClientId",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/LigneCommandeClientDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/update/article/{idCommande}/{idLigneCommande}/{idArticle}" : {
+      "patch" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "updateArticle",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idLigneCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/update/client/{idCommande}/{idClient}" : {
+      "patch" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "updateClient",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idClient",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/update/etat/{idCommande}/{etatCommande}" : {
+      "patch" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "updateEtatCommande",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "etatCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "EN_PREPARATION", "VALIDEE", "LIVREE" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/update/quantite/{idCommande}/{idLigneCommande}/{quantite}" : {
+      "patch" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "updateQuantiteCommande",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idLigneCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "quantite",
+          "in" : "path",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesclients/{idCommandeClient}" : {
+      "get" : {
+        "tags" : [ "commandesclients" ],
+        "operationId" : "findById",
+        "parameters" : [ {
+          "name" : "idCommandeClient",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeClientDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/all" : {
+      "get" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/CommandeFournisseurDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/create" : {
+      "post" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "save",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CommandeFournisseurDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/delete/article/{idCommande}/{idLigneCommande}" : {
+      "delete" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "deleteArticle",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idLigneCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/delete/{idCommandeFournisseur}" : {
+      "delete" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idCommandeFournisseur",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/filter/{codeCommandeFournisseur}" : {
+      "get" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "findByCode",
+        "parameters" : [ {
+          "name" : "codeCommandeFournisseur",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/lignesCommande/{idCommande}" : {
+      "get" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "findAllLignesCommandesFournisseurByCommandeFournisseurId",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/LigneCommandeFournisseurDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/update/article/{idCommande}/{idLigneCommande}/{idArticle}" : {
+      "patch" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "updateArticle",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idLigneCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/update/etat/{idCommande}/{etatCommande}" : {
+      "patch" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "updateEtatCommande",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "etatCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "EN_PREPARATION", "VALIDEE", "LIVREE" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/update/fournisseur/{idCommande}/{idFournisseur}" : {
+      "patch" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "updateFournisseur",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idFournisseur",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/update/quantite/{idCommande}/{idLigneCommande}/{quantite}" : {
+      "patch" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "updateQuantiteCommande",
+        "parameters" : [ {
+          "name" : "idCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "idLigneCommande",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "quantite",
+          "in" : "path",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/commandesfournisseurs/{idCommandeFournisseur}" : {
+      "get" : {
+        "tags" : [ "commandefournisseur" ],
+        "operationId" : "findById",
+        "parameters" : [ {
+          "name" : "idCommandeFournisseur",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CommandeFournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/entreprises/all" : {
+      "get" : {
+        "tags" : [ "entreprises" ],
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/EntrepriseDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/entreprises/create" : {
+      "post" : {
+        "tags" : [ "entreprises" ],
+        "operationId" : "save",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EntrepriseDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/EntrepriseDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/entreprises/delete/{idEntreprise}" : {
+      "delete" : {
+        "tags" : [ "entreprises" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idEntreprise",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/entreprises/{idEntreprise}" : {
+      "get" : {
+        "tags" : [ "entreprises" ],
+        "operationId" : "findById",
+        "parameters" : [ {
+          "name" : "idEntreprise",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/EntrepriseDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/fournisseurs/all" : {
+      "get" : {
+        "tags" : [ "fournisseur" ],
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FournisseurDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/fournisseurs/create" : {
+      "post" : {
+        "tags" : [ "fournisseur" ],
+        "operationId" : "save",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FournisseurDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/fournisseurs/delete/{idFournisseur}" : {
+      "delete" : {
+        "tags" : [ "fournisseur" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idFournisseur",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/fournisseurs/{idFournisseur}" : {
+      "get" : {
+        "tags" : [ "fournisseur" ],
+        "operationId" : "findById",
+        "parameters" : [ {
+          "name" : "idFournisseur",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FournisseurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/mvtstk/correctionneg" : {
+      "post" : {
+        "tags" : [ "mvtstk" ],
+        "operationId" : "correctionStockNeg",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/MvtStkDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MvtStkDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/mvtstk/correctionpos" : {
+      "post" : {
+        "tags" : [ "mvtstk" ],
+        "operationId" : "correctionStockPos",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/MvtStkDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MvtStkDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/mvtstk/entree" : {
+      "post" : {
+        "tags" : [ "mvtstk" ],
+        "operationId" : "entreeStock",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/MvtStkDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MvtStkDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/mvtstk/filter/article/{idArticle}" : {
+      "get" : {
+        "tags" : [ "mvtstk" ],
+        "operationId" : "mvtStkArticle",
+        "parameters" : [ {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/MvtStkDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/mvtstk/sortie" : {
+      "post" : {
+        "tags" : [ "mvtstk" ],
+        "operationId" : "sortieStock",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/MvtStkDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/MvtStkDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/mvtstk/stockreel/{idArticle}" : {
+      "get" : {
+        "tags" : [ "mvtstk" ],
+        "operationId" : "stockReelArticle",
+        "parameters" : [ {
+          "name" : "idArticle",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "number"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/save/{id}/{title}/{context}" : {
+      "post" : {
+        "tags" : [ "photos" ],
+        "operationId" : "savePhoto",
+        "parameters" : [ {
+          "name" : "context",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "file",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        }, {
+          "name" : "title",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/utilisateurs/all" : {
+      "get" : {
+        "tags" : [ "utilisateurs" ],
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/UtilisateurDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/utilisateurs/create" : {
+      "post" : {
+        "tags" : [ "utilisateurs" ],
+        "operationId" : "save",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UtilisateurDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UtilisateurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/utilisateurs/delete/{idUtilisateur}" : {
+      "delete" : {
+        "tags" : [ "utilisateurs" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idUtilisateur",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/utilisateurs/update/password" : {
+      "post" : {
+        "tags" : [ "utilisateurs" ],
+        "operationId" : "changerMotDePasse",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ChangerMotDePasseUtilisateurDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UtilisateurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/utilisateurs/{idUtilisateur}" : {
+      "get" : {
+        "tags" : [ "utilisateurs" ],
+        "operationId" : "findById",
+        "parameters" : [ {
+          "name" : "idUtilisateur",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UtilisateurDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/ventes/all" : {
+      "get" : {
+        "tags" : [ "ventes" ],
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/VentesDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/ventes/create" : {
+      "post" : {
+        "tags" : [ "ventes" ],
+        "operationId" : "save",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/VentesDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/VentesDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/ventes/delete/{idVente}" : {
+      "delete" : {
+        "tags" : [ "ventes" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "idVente",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/ventes/{codeVente}" : {
+      "get" : {
+        "tags" : [ "ventes" ],
+        "operationId" : "findByCode",
+        "parameters" : [ {
+          "name" : "codeVente",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/VentesDto"
+            }
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/ventes/{idVente}" : {
+      "get" : {
+        "tags" : [ "ventes" ],
+        "operationId" : "findById",
+        "parameters" : [ {
+          "name" : "idVente",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/VentesDto"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Adresse" : {
+      "type" : "object",
+      "properties" : {
+        "adresse1" : {
+          "type" : "string"
+        },
+        "adresse2" : {
+          "type" : "string"
+        },
+        "ville" : {
+          "type" : "string"
+        },
+        "codePostale" : {
+          "type" : "string"
+        },
+        "pays" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AdresseDto" : {
+      "type" : "object",
+      "properties" : {
+        "adresse1" : {
+          "type" : "string"
+        },
+        "adresse2" : {
+          "type" : "string"
+        },
+        "ville" : {
+          "type" : "string"
+        },
+        "codePostale" : {
+          "type" : "string"
+        },
+        "pays" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Article" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "codeArticle" : {
+          "type" : "string"
+        },
+        "designation" : {
+          "type" : "string"
+        },
+        "prixUnitaireHt" : {
+          "type" : "number"
+        },
+        "tauxTva" : {
+          "type" : "number"
+        },
+        "prixUnitaireTtc" : {
+          "type" : "number"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "category" : {
+          "$ref" : "#/definitions/Category"
+        },
+        "ligneVentes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneVente"
+          }
+        },
+        "ligneCommandeClients" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneCommandeClient"
+          }
+        },
+        "ligneCommandeFournisseurs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneCommandeFournisseur"
+          }
+        },
+        "mvtStks" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MvtStk"
+          }
+        }
+      }
+    },
+    "ArticleDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "codeArticle" : {
+          "type" : "string"
+        },
+        "designation" : {
+          "type" : "string"
+        },
+        "prixUnitaireHt" : {
+          "type" : "number"
+        },
+        "tauxTva" : {
+          "type" : "number"
+        },
+        "prixUnitaireTtc" : {
+          "type" : "number"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "category" : {
+          "$ref" : "#/definitions/CategoryDto"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "AuthenticationRequest" : {
+      "type" : "object",
+      "properties" : {
+        "login" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AuthenticationResponse" : {
+      "type" : "object",
+      "properties" : {
+        "accessToken" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Category" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "designation" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "articles" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Article"
+          }
+        }
+      }
+    },
+    "CategoryDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "designation" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "ChangerMotDePasseUtilisateurDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "motDePasse" : {
+          "type" : "string"
+        },
+        "confirmMotDePasse" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Client" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "nom" : {
+          "type" : "string"
+        },
+        "prenom" : {
+          "type" : "string"
+        },
+        "adresse" : {
+          "$ref" : "#/definitions/Adresse"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "mail" : {
+          "type" : "string"
+        },
+        "numTel" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "commandeClients" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CommandeClient"
+          }
+        }
+      }
+    },
+    "ClientDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nom" : {
+          "type" : "string"
+        },
+        "prenom" : {
+          "type" : "string"
+        },
+        "adresse" : {
+          "$ref" : "#/definitions/AdresseDto"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "mail" : {
+          "type" : "string"
+        },
+        "numTel" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "CommandeClient" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "dateCommande" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "etatCommande" : {
+          "type" : "string",
+          "enum" : [ "EN_PREPARATION", "VALIDEE", "LIVREE" ]
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "client" : {
+          "$ref" : "#/definitions/Client"
+        },
+        "ligneCommandeClients" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneCommandeClient"
+          }
+        }
+      }
+    },
+    "CommandeClientDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "dateCommande" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "etatCommande" : {
+          "type" : "string",
+          "enum" : [ "EN_PREPARATION", "VALIDEE", "LIVREE" ]
+        },
+        "client" : {
+          "$ref" : "#/definitions/ClientDto"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "commandeLivree" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "CommandeFournisseur" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "dateCommande" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "etatCommande" : {
+          "type" : "string",
+          "enum" : [ "EN_PREPARATION", "VALIDEE", "LIVREE" ]
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "fournisseur" : {
+          "$ref" : "#/definitions/Fournisseur"
+        },
+        "ligneCommandeFournisseurs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneCommandeFournisseur"
+          }
+        }
+      }
+    },
+    "CommandeFournisseurDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "dateCommande" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "etatCommande" : {
+          "type" : "string",
+          "enum" : [ "EN_PREPARATION", "VALIDEE", "LIVREE" ]
+        },
+        "fournisseur" : {
+          "$ref" : "#/definitions/FournisseurDto"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "commandeLivree" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "EntrepriseDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nom" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "adresse" : {
+          "$ref" : "#/definitions/AdresseDto"
+        },
+        "codeFiscal" : {
+          "type" : "string"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "numTel" : {
+          "type" : "string"
+        },
+        "steWeb" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Fournisseur" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "nom" : {
+          "type" : "string"
+        },
+        "prenom" : {
+          "type" : "string"
+        },
+        "adresse" : {
+          "$ref" : "#/definitions/Adresse"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "mail" : {
+          "type" : "string"
+        },
+        "numTel" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "commandeFournisseurs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CommandeFournisseur"
+          }
+        }
+      }
+    },
+    "FournisseurDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nom" : {
+          "type" : "string"
+        },
+        "prenom" : {
+          "type" : "string"
+        },
+        "adresse" : {
+          "$ref" : "#/definitions/AdresseDto"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "mail" : {
+          "type" : "string"
+        },
+        "numTel" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "LigneCommandeClient" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "article" : {
+          "$ref" : "#/definitions/Article"
+        },
+        "commandeClient" : {
+          "$ref" : "#/definitions/CommandeClient"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "prixUnitaire" : {
+          "type" : "number"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "LigneCommandeClientDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "article" : {
+          "$ref" : "#/definitions/ArticleDto"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "prixUnitaire" : {
+          "type" : "number"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "LigneCommandeFournisseur" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "article" : {
+          "$ref" : "#/definitions/Article"
+        },
+        "commandeFournisseur" : {
+          "$ref" : "#/definitions/CommandeFournisseur"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "prixUnitaire" : {
+          "type" : "number"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "LigneCommandeFournisseurDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "article" : {
+          "$ref" : "#/definitions/ArticleDto"
+        },
+        "commandeFournisseur" : {
+          "$ref" : "#/definitions/CommandeFournisseur"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "prixUnitaire" : {
+          "type" : "number"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "LigneVente" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "vente" : {
+          "$ref" : "#/definitions/Ventes"
+        },
+        "article" : {
+          "$ref" : "#/definitions/Article"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "prixUnitaire" : {
+          "type" : "number"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "LigneVenteDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "vente" : {
+          "$ref" : "#/definitions/VentesDto"
+        },
+        "article" : {
+          "$ref" : "#/definitions/ArticleDto"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "prixUnitaire" : {
+          "type" : "number"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "MvtStk" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "dateMvt" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "article" : {
+          "$ref" : "#/definitions/Article"
+        },
+        "typeMvt" : {
+          "type" : "string",
+          "enum" : [ "ENTREE", "SORTIE", "CORRECTION_POS", "CORRECTION_NEG" ]
+        },
+        "sourceMvt" : {
+          "type" : "string",
+          "enum" : [ "COMMANDE_CLIENT", "COMMANDE_FOURNISSEUR", "VENTE" ]
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "MvtStkDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "dateMvt" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "quantite" : {
+          "type" : "number"
+        },
+        "article" : {
+          "$ref" : "#/definitions/ArticleDto"
+        },
+        "typeMvt" : {
+          "type" : "string",
+          "enum" : [ "ENTREE", "SORTIE", "CORRECTION_POS", "CORRECTION_NEG" ]
+        },
+        "sourceMvt" : {
+          "type" : "string",
+          "enum" : [ "COMMANDE_CLIENT", "COMMANDE_FOURNISSEUR", "VENTE" ]
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "RolesDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "roleName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UtilisateurDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nom" : {
+          "type" : "string"
+        },
+        "prenom" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "dateDeNaissance" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "moteDePasse" : {
+          "type" : "string"
+        },
+        "adresse" : {
+          "$ref" : "#/definitions/AdresseDto"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "entreprise" : {
+          "$ref" : "#/definitions/EntrepriseDto"
+        },
+        "roles" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RolesDto"
+          }
+        }
+      }
+    },
+    "Ventes" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "creationDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastModifiedDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "dateVente" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "commentaire" : {
+          "type" : "string"
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ligneVentes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneVente"
+          }
+        }
+      }
+    },
+    "VentesDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "dateVente" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "commentaire" : {
+          "type" : "string"
+        },
+        "ligneVentes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneVenteDto"
+          }
+        },
+        "idEntreprise" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    }
+  }
+}
