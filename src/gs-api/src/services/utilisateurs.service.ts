@@ -16,6 +16,7 @@ class UtilisateursService extends __BaseService {
   static readonly findAllPath = '/gestiondestock/v1/utilisateurs/all';
   static readonly savePath = '/gestiondestock/v1/utilisateurs/create';
   static readonly deletePath = '/gestiondestock/v1/utilisateurs/delete/{idUtilisateur}';
+  static readonly findByEmailPath = '/gestiondestock/v1/utilisateurs/find/{email}';
   static readonly changerMotDePassePath = '/gestiondestock/v1/utilisateurs/update/password';
   static readonly findByIdPath = '/gestiondestock/v1/utilisateurs/{idUtilisateur}';
 
@@ -126,6 +127,42 @@ class UtilisateursService extends __BaseService {
   delete(idUtilisateur: number): __Observable<null> {
     return this.deleteResponse(idUtilisateur).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param email undefined
+   * @return successful operation
+   */
+  findByEmailResponse(email: string): __Observable<__StrictHttpResponse<UtilisateurDto>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/gestiondestock/v1/utilisateurs/find/${email}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<UtilisateurDto>;
+      })
+    );
+  }
+  /**
+   * @param email undefined
+   * @return successful operation
+   */
+  findByEmail(email: string): __Observable<UtilisateurDto> {
+    return this.findByEmailResponse(email).pipe(
+      __map(_r => _r.body as UtilisateurDto)
     );
   }
 

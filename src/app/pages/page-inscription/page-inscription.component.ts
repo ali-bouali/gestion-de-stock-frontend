@@ -43,8 +43,17 @@ export class PageInscriptionComponent implements OnInit {
     };
     this.userService.login(authenticationRequest)
     .subscribe(response => {
-      this.userService.setConnectedUser(response);
+      this.userService.setAccessToken(response);
+      this.getUserByEmail(authenticationRequest.login);
+      localStorage.setItem('origin', 'inscription');
       this.router.navigate(['changermotdepasse']);
+    });
+  }
+
+  getUserByEmail(email?: string): void {
+    this.userService.getUserByEmail(email)
+    .subscribe(user => {
+      this.userService.setConnectedUser(user);
     });
   }
 }
