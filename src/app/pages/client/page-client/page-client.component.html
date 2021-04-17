@@ -10,12 +10,17 @@
     </div>
   </div>
   <div class="col m-3">
-    <app-detail-clt-frs></app-detail-clt-frs>
-    <app-detail-clt-frs></app-detail-clt-frs>
-    <app-detail-clt-frs></app-detail-clt-frs>
-    <app-detail-clt-frs></app-detail-clt-frs>
+    <div class="alert alert-danger" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </div>
+    <app-detail-clt-frs
+      *ngFor="let client of listClient"
+      [clientFournisseur]="client"
+      [origin]="'client'"
+      (suppressionResult)="handleSuppression($event)"
+    ></app-detail-clt-frs>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" *ngIf="listClient.length">
     <div class=" col-md-12 text-center">
       <app-pagination></app-pagination>
     </div>

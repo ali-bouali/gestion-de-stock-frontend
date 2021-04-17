@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {LigneCommandeClientDto} from '../../../gs-api/src/models/ligne-commande-client-dto';
 
 @Component({
   selector: 'app-detail-cmd',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detail-cmd.component.scss']
 })
 export class DetailCmdComponent implements OnInit {
+
+  @Input()
+  ligneCommande: LigneCommandeClientDto = {};
 
   constructor() { }
 

@@ -2,14 +2,14 @@
   <!--  Details article-->
   <div class="col-md-3 custom-border-right mb-1 mt-1 ">
     <div class="row text-center">
-      <div class="col-md-11">Code article</div>
+      <div class="col-md-11">{{ ligneCommande.article?.codeArticle }}</div>
     </div>
   </div>
 
   <div class="col-md-3 custom-border-right mb-1 mt-1 ">
     <div class="row">
       <div class="col-md-12 text-center">
-        Designation article
+        {{ ligneCommande.article?.designation }}
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
   <div class="col-md-2 custom-border-right mb-1 mt-1 ">
     <div class="row">
       <div class="col-md-12 text-center">
-        6
+        {{ ligneCommande.quantite }}
       </div>
     </div>
   </div>
@@ -25,14 +25,16 @@
   <div class="col-md-2 custom-border-right mb-1 mt-1 ">
     <div class="row">
       <div class="col-md-12 text-center">
-        12,3
+        {{ ligneCommande.prixUnitaire }}
       </div>
     </div>
   </div>
 
   <div class="col-md-2 mb-1 mt-1">
-    <div class="row text-center">
-      73,8
+    <div class="row">
+      <div class="col-md-12 text-center">
+        {{ ligneCommande.prixUnitaire && ligneCommande.quantite ? +ligneCommande.prixUnitaire * +ligneCommande.quantite : '' }}
+      </div>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ClientDto} from '../../../gs-api/src/models/client-dto';
 
 @Component({
   selector: 'app-detail-cmd-clt-frs',
@@ -7,12 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailCmdCltFrsComponent implements OnInit {
 
+  @Input()
+  origin = '';
+  @Input()
+
+  commande: any = {};
+  cltFrs: ClientDto | undefined = {};
+
   constructor() { }
 
   ngOnInit(): void {
+    this.extractClientFournisseur();
   }
 
   modifierClick(): void {
-    console.log('click modifier here');
+  }
+
+  extractClientFournisseur(): void {
+    if (this.origin === 'client') {
+      this.cltFrs = this.commande?.client;
+    } else if (this.origin === 'fournisseur') {
+      this.cltFrs = this.commande.fournisseur;
+    }
   }
 }

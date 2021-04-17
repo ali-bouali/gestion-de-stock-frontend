@@ -8,14 +8,19 @@
         (clickEvent)="nouvelArticle()"
       ></app-boutton-action>
     </div>
+    <div class="alert alert-danger" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </div>
   </div>
   <div class="col m-3">
-    <app-detail-article></app-detail-article>
-    <app-detail-article></app-detail-article>
-    <app-detail-article></app-detail-article>
-    <app-detail-article></app-detail-article>
+    <app-detail-article
+      *ngFor="let article of listArticle"
+      [articleDto]="article"
+      (suppressionResult)="handleSuppression($event)"
+    >
+    </app-detail-article>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" *ngIf="listArticle.length">
     <div class=" col-md-12 text-center">
       <app-pagination></app-pagination>
     </div>

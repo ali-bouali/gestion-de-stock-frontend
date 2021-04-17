@@ -11,86 +11,44 @@
       ></app-boutton-action>
     </div>
   </div>
-  <div class="col m-3">
-    <div class="accordion" id="accordionExample">
+  <div class="col m-3" >
+    <div class="accordion" id="accordionExample" *ngFor="let cmd of listeCommandes">
       <div class="card">
         <div class="card-body" id="headingOne">
-          <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <app-detail-cmd-clt-frs></app-detail-cmd-clt-frs>
+          <button class="btn btn-block text-left" type="button" data-toggle="collapse"
+                  [attr.data-target]="'#collapseOne'+cmd.id"
+                  aria-expanded="true"
+                  aria-controls="collapseOne">
+            <app-detail-cmd-clt-frs
+              [commande]="cmd"
+              [origin]="origin"
+            ></app-detail-cmd-clt-frs>
           </button>
         </div>
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="max-height: 300px;
+        <div id="collapseOne{{cmd.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"
+             style="max-height: 300px;
         overflow-y: scroll">
           <div class="card-body">
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd
+            *ngFor="let ligne of mapLignesCommande.get(cmd.id)"
+            [ligneCommande]="ligne"
+            ></app-detail-cmd>
           </div>
         </div>
           <div class="card-footer">
             <div class="row">
               <div class="col-md-6 text-left">
-                <h5>12 articles commandes</h5>
+                <h5>{{mapLignesCommande.get(cmd.id).length}} lignes de commande</h5>
               </div>
               <div class="col-md-6 text-right">
-                <h5>Total commande: 123,69</h5>
+                <h5>Total commande: {{ calculerTotalCommande(cmd.id) }}</h5>
               </div>
             </div>
           </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body" id="headingOne1">
-          <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="true"
-                  aria-controls="collapseOne">
-            <app-detail-cmd-clt-frs></app-detail-cmd-clt-frs>
-          </button>
-        </div>
-        <div id="collapseOne1" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="max-height: 300px;
-        overflow-y: scroll">
-          <div class="card-body">
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="row">
-            <div class="col-md-6 text-left">
-              <h5>12 articles commandes</h5>
-            </div>
-            <div class="col-md-6 text-right">
-              <h5>Total commande: 123,69</h5>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" *ngIf="listeCommandes.length">
     <div class=" col-md-12 text-center">
       <app-pagination></app-pagination>
     </div>

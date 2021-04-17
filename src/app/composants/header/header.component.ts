@@ -15,8 +15,8 @@ export class HeaderComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  async ngOnInit(): Promise<void> {
-    this.connectedUser = await this.userService.getConnectedUser();
+  ngOnInit(): void {
+    this.connectedUser = this.userService.getConnectedUser();
   }
 
 }

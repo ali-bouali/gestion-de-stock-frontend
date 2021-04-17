@@ -1934,6 +1934,12 @@
           "type" : "integer",
           "format" : "int32"
         },
+        "ligneCommandeClients" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneCommandeClientDto"
+          }
+        },
         "commandeLivree" : {
           "type" : "boolean"
         }
@@ -2004,6 +2010,12 @@
         "idEntreprise" : {
           "type" : "integer",
           "format" : "int32"
+        },
+        "ligneCommandeFournisseurs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LigneCommandeFournisseurDto"
+          }
         },
         "commandeLivree" : {
           "type" : "boolean"

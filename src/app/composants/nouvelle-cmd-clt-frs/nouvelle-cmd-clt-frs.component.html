@@ -3,85 +3,88 @@
     <div class="col-md-12 mb-3 mt-3">
       <h2>Nouvelle commande {{origin}}</h2>
     </div>
+    <div class="alert alert-danger" *ngIf="errorMsg.length">
+      <div *ngFor="let msg of errorMsg">
+        <span> {{ msg }}</span>
+      </div>
+    </div>
     <div class="row p-3 custom-border">
       <div class="col-md-5 custom-border-right">
         <form>
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Code commande">
+            <input type="text" class="form-control" name="codeCmd" placeholder="Code commande" [(ngModel)]="codeCommande">
           </div>
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Date commande">
           </div>
           <div class="form-group">
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Selectionner un client</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <select class="form-control" name="cltFrs" [(ngModel)]="selectedClientFournisseur">
+              <option>Selectionner un {{ origin }}</option>
+              <option *ngFor="let obj of listClientsFournisseurs" [ngValue]="obj">
+                {{ obj.nom }}&nbsp;{{ obj.prenom }}
+              </option>
             </select>
           </div>
         </form>
       </div>
-      <div class="col-md-5 custom-border-right">
+      <div class="col-md-5 custom-border-right" *ngIf="selectedClientFournisseur.nom">
         <div class="col">
           <div class="row">
             <div class="col-md-1"><i class="fas fa-info-circle blue-color"></i></div>
-            <div class="col-md-10">Nom</div>
+            <div class="col-md-10">{{ selectedClientFournisseur.nom }}</div>
           </div>
           <div class="row">
             <div class="col-md-1"><i class="fas fa-info-circle blue-color"></i></div>
-            <div class="col-md-10">Prenom</div>
+            <div class="col-md-10">{{ selectedClientFournisseur.prenom }}</div>
           </div>
           <div class="row">
             <div class="col-md-1"><i class="fas fa-phone-alt blue-color"></i></div>
-            <div class="col-md-10">0011 22 33 44 55 66</div>
+            <div class="col-md-10"> {{ selectedClientFournisseur.numTel }}</div>
           </div>
           <div class="row">
             <div class="col-md-1"><i class="fas fa-hourglass-half blue-color"></i></div>
-            <div class="col-md-10">EN PREPARATION</div>
+            <div class="col-md-10 text-primary">EN PREPARATION</div>
           </div>
         </div>
       </div>
-      <div class="col-md-2 text-center">
-        <img src="assets/product.png" class="rounded-circle" width="150px" height="150px" />
+      <div class="col-md-2 text-center" *ngIf="selectedClientFournisseur.nom">
+        <img [src]="selectedClientFournisseur.photo ? selectedClientFournisseur.photo :  'assets/product.png' " class="rounded-circle" width="150px"
+             height="150px" />
       </div>
     </div>
     <div class="row mt-2 p-3 custom-border">
         <div class="form-row col-md-12">
           <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Code article">
+            <input type="text" class="form-control" placeholder="Code article" [(ngModel)]="codeArticle" (input)="filtrerArticle()">
+            <div *ngIf="codeArticle.length && !articleNotYetSelected" class="autocomplete shadow p-3 mb-5 bg-white rounded">
+              <p class="p-1" *ngFor="let article of listArticle"
+                 (click)="selectArticleClick(article)"
+              >
+                {{ article.codeArticle }}&nbsp; {{ article.designation }}
+              </p>
+            </div>
           </div>
           <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Quantite">
+            <input type="text" class="form-control" placeholder="Quantite" [(ngModel)]="quantite">
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Prix unitaire">
+            <input type="text" class="form-control" placeholder="Prix unitaire" [(ngModel)]="searchedArticle.prixUnitaireTtc">
           </div>
           <div class="col-md-1">
-            <button type="button" class="btn btn-success"><i class="fas fa-plus"></i></button>
+            <button type="button" class="btn btn-success" (click)="ajouterLigneCommande()"><i class="fas fa-plus"></i></button>
           </div>
         </div>
     </div>
     <div class="row mt-2 p-3 custom-border" style="max-height: 300px;overflow-y: scroll">
       <div class="col-md-12">
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
-        <app-detail-cmd></app-detail-cmd>
+        <app-detail-cmd *ngFor="let ligne of lignesCommande"
+        [ligneCommande]="ligne"
+        ></app-detail-cmd>
       </div>
     </div>
     <div class="row mt-2 p-3 custom-border ">
       <div class="col-md-12 text-right">
-        <h3>Total de la commande: 135,9</h3>
+        <h3>Total de la commande: {{ totalCommande }}</h3>
       </div>
     </div>
   </div>
@@ -90,7 +93,7 @@
       <i class="fas fa-ban"></i>&nbsp;
       Annuler
     </button>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" (click)="enregistrerCommande()">
       <i class="fas fa-save"></i>&nbsp;
       Enregitrer
     </button>
